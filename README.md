@@ -56,7 +56,7 @@ git clone git@github.com:handaanmol/inventory-service.git
 5) You will get the services folder. Go to the working directory
 
 ```sh
-cd node-services-boilerplate
+cd inventory-service
 ```
 #### Run the App
 1) Install node dependencies
