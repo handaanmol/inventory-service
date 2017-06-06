@@ -1,0 +1,255 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "inventory-services",
+        "description": "Microservice for adding an item to inventory(json)",
+        "version": "1.0.0",
+        "termsOfService": "https://coe.mindtree.com/coe_advwebtech/",
+        "license": {}
+    },
+    "host": "localhost:9001",
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/inventory-service/apis/items": {
+            "post": {
+                "summary": "add an item to inventory",
+                "description": "add an item to inventory\n",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "content",
+                        "in": "body",
+                        "description": "content",
+                        "schema": {
+                            "$ref": "#/definitions/addItem"
+                        }
+                    }
+                ],
+                "tags": [
+                    "items"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "add an item to inventory operation response",
+                        "schema": {
+                            "$ref": "#/definitions/response"
+                        }
+                    },
+                    "500": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "get items in inventory",
+                "description": "get items in inventory\n",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "items"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "get items in inventory operation response",
+                        "schema": {
+                            "$ref": "#/definitions/response"
+                        }
+                    },
+                    "500": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/inventory-service/apis/items/{id}": {
+            "put": {
+                "summary": "update an item in inventory",
+                "description": "update an item in inventory\n",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of the item",
+                        "type": "string"
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "description": "quantity of item to update in inventory",
+                        "type": "Integer",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "items"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "update an item to inventory operation response",
+                        "schema": {
+                            "$ref": "#/definitions/response"
+                        }
+                    },
+                    "500": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "get item by id in inventory",
+                "description": "get item by id in inventory\n",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of the item",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "items"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "get items in inventory operation response",
+                        "schema": {
+                            "$ref": "#/definitions/response"
+                        }
+                    },
+                    "500": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/inventory-service/apis/items/{id}/order": {
+            "post": {
+                "summary": "placing an order",
+                "description": "placing an order\n",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of the item",
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "orderId",
+                        "in": "query",
+                        "description": "order Id",
+                        "type": "Integer",
+                        "required": true
+                    },
+                    {
+                        "name": "orderQty",
+                        "in": "query",
+                        "description": "order quantity",
+                        "type": "Integer",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ordering for item operation response",
+                        "schema": {
+                            "$ref": "#/definitions/response"
+                        }
+                    },
+                    "500": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        },
+        "response": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object"
+                },
+                "status": {
+                    "type": "object"
+                }
+            }
+        },
+        "addItem": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "number"
+                }
+            }
+        }
+    }
+}
