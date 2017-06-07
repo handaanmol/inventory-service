@@ -8,8 +8,8 @@ var orderMicroservice = require('../../config/config').props().ordersConfig;
 // var Client = require('node-rest-client').Client;
 // reading json file and adding it
 var fs = require('fs');
-var itemFile = require('../../../item.json')
-var orderFile = require('../../../orders.json')
+var itemFile = require('../../item.json')
+// var orderFile = require('../../../orders.json')
 //Creating the object which will finally be exported
 var itemService = {
     addItem: addItem,
@@ -31,7 +31,7 @@ function addItem(item) {
             quantity: item.quantity
         }
         itemFile.itemData.push(obj);
-        fs.writeFile(__dirname + "/../../../item.json", JSON.stringify(itemFile), function (err) {
+        fs.writeFile(__dirname + "/../../item.json", JSON.stringify(itemFile), function (err) {
             if (err) {
                 logger.error("Some error while adding new item in the item file");
                 reject(err);
@@ -68,7 +68,7 @@ function getItemById(itemId) {
 function updateItem(itemId, itemQty) {
     return new Promise(function (resolve, reject) {
         itemFile.itemData[itemId - 1].quantity = itemQty;
-        fs.writeFile(__dirname + "/../../../item.json", JSON.stringify(itemFile), function (err) {
+        fs.writeFile(__dirname + "/../../item.json", JSON.stringify(itemFile), function (err) {
             if (err) {
                 logger.error("Some error while updating item with id :" + itemId + " in the item file");
                 reject(err);
@@ -84,7 +84,7 @@ function updateInventoryByOrder(itemId, orderId, orderQty) {
     return new Promise(function (resolve, reject) {
         itemFile.itemData[itemId - 1].quantity -= orderQty;
         console.log("updated itemFile is--------", itemFile.itemData);
-        fs.writeFile(__dirname + "/../../../item.json", JSON.stringify(itemFile), function (err) {
+        fs.writeFile(__dirname + "/../../item.json", JSON.stringify(itemFile), function (err) {
             if (err) {
                 logger.error("Some error while updating the item file by order Id");
                 reject(err);
