@@ -16,7 +16,8 @@ var itemService = {
     updateItem: updateItem,
     updateInventoryByOrder: updateInventoryByOrder,
     getItems: getItems,
-    getItemById: getItemById
+    getItemById: getItemById,
+    getInventoryOrdersByGtin: getInventoryOrdersByGtin
 };
 
 /**
@@ -64,6 +65,31 @@ function getItemById(itemId) {
     })
 }
 
+function getInventoryOrdersByGtin(gtin) {
+    return new Promise(function (resolve, reject) {
+        var index;
+        if (itemFile.itemData != undefined && itemFile.itemData != null) {
+            for (var i = 0; i < itemFile.itemData.length; i++) {
+                if (itemFile.itemData[i].gtin == gtin) {
+                    index = i;
+                } else {
+                    console.log("no match found");
+                }
+
+            }
+            if (index != null || index != undefined) {
+                resolve(itemFile.itemData[index])
+            }
+            else {
+                resolve();
+            }
+        }
+        else {
+            logger.error("Some error in fetching the items from inventory");
+            reject("Some error in fetching the items from inventory");
+        }
+    })
+}
 
 function updateItem(itemId, itemQty) {
     return new Promise(function (resolve, reject) {

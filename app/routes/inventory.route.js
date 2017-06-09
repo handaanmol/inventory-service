@@ -20,7 +20,9 @@ function init(router) {
         .post(updateInventoryByOrder);
     router.route('/items/:id')
         .put(updateItem)
-        .get(getItemById)
+        .get(getItemById);
+    router.route('/items/gtin/:gtin')
+        .get(getInventoryOrdersByGtin);
 
 };
 /**
@@ -43,6 +45,23 @@ function addItem(req, res) {
         logger.error("error while adding Item {{In Controller}}", error);
         response.status.code = "500";
         response.status.message = "Items were not added";
+        res.status(500).json(response);
+    });
+}
+
+function getInventoryOrdersByGtin(req, res) {
+    var response = new Response();
+    var gtinId = req.params.gtin;
+    inventoryService.getInventoryOrdersByGtin(gtinId).then(function (result) {
+        response.data.item = result;
+        response.status.statusCode = "200";
+        response.status.message = "Item with gtin id:" + gtinId + " fetched successfully.";
+        logger.info("Item with gtin id:" + gtinId + " fetched successfully.");
+        res.status(200).json(response);
+    }).catch(function (error) {
+        logger.error("error while fetching Item with gtin id :" + gtinId + " {{In Controller}}", error);
+        response.status.statusCode = "500";
+        response.status.message = "Item was not fetched successfully";
         res.status(500).json(response);
     });
 }
@@ -102,8 +121,8 @@ function updateInventoryByOrder(req, res) {
     var response = new Response();
     var itemId = parseInt(req.params.id);
     var orderId = parseInt(req.query.orderId);
-    var orderQty=parseInt(req.query.orderQty);
-    inventoryService.updateInventoryByOrder(itemId, orderId,orderQty).then(function (result) {
+    var orderQty = parseInt(req.query.orderQty);
+    inventoryService.updateInventoryByOrder(itemId, orderId, orderQty).then(function (result) {
         response.data.item = {};
         response.status.code = "200";
         response.status.message = "Inventory updated successfully by order id.";

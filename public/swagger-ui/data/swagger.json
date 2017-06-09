@@ -211,6 +211,43 @@
                     }
                 }
             }
+        },
+        "/inventory-service/apis/items/gtin/{gtin}": {
+            "get": {
+                "summary": "get order details based on gtin",
+                "description": "get order details based on gtin\n",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "gtin",
+                        "in": "path",
+                        "description": "gtin of the item",
+                        "type": "Integer"
+                    }
+                ],
+                "tags": [
+                    "items"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "fetched order details by gtin ID",
+                        "schema": {
+                            "$ref": "#/definitions/response"
+                        }
+                    },
+                    "500": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
