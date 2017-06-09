@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "inventory-services",
+        "title": "inventory",
         "description": "Microservice for adding an item to inventory(json)",
         "version": "1.0.0",
         "termsOfService": "https://coe.mindtree.com/coe_advwebtech/",
@@ -16,7 +16,7 @@
         "application/json"
     ],
     "paths": {
-        "/inventory-service/apis/items": {
+        "/inventory/apis/items": {
             "post": {
                 "summary": "add an item to inventory",
                 "description": "add an item to inventory\n",
@@ -82,7 +82,7 @@
                 }
             }
         },
-        "/inventory-service/apis/items/{id}": {
+        "/inventory/apis/items/{id}": {
             "put": {
                 "summary": "update an item in inventory",
                 "description": "update an item in inventory\n",
@@ -161,7 +161,7 @@
                 }
             }
         },
-        "/inventory-service/apis/items/{id}/order": {
+        "/inventory/apis/items/{id}/order": {
             "post": {
                 "summary": "placing an order",
                 "description": "placing an order\n",
@@ -212,7 +212,7 @@
                 }
             }
         },
-        "/inventory-service/apis/items/gtin/{gtin}": {
+        "/inventory/apis/items/gtin/{gtin}": {
             "get": {
                 "summary": "get order details based on gtin",
                 "description": "get order details based on gtin\n",
