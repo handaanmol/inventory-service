@@ -34,18 +34,12 @@
                         "type": "Integer"
                     },
                     {
-                        "name": "orderId",
-                        "in": "query",
-                        "description": "order Id",
-                        "type": "Integer",
-                        "required": true
-                    },
-                    {
-                        "name": "orderQty",
-                        "in": "query",
-                        "description": "order quantity",
-                        "type": "Integer",
-                        "required": true
+                        "name": "content",
+                        "in": "body",
+                        "description": "content",
+                        "schema": {
+                            "$ref": "#/definitions/editItem"
+                        }
                     }
                 ],
                 "tags": [
@@ -139,6 +133,17 @@
                     "type": "string"
                 },
                 "quantity": {
+                    "type": "number"
+                }
+            }
+        },
+        "editItem": {
+            "type": "object",
+            "properties": {
+                "orderId": {
+                    "type": "number"
+                },
+                "orderQty": {
                     "type": "number"
                 }
             }

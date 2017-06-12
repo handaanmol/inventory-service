@@ -120,8 +120,8 @@ function updateItem(req, res) {
 function updateInventoryByOrder(req, res) {
     var response = new Response();
     var gtin = parseInt(req.params.gtin);
-    var orderId = parseInt(req.query.orderId);
-    var orderQty = parseInt(req.query.orderQty);
+    var orderId = parseInt(req.body.orderId);
+    var orderQty = parseInt(req.body.orderQty);
     inventoryService.updateInventoryByOrder(gtin, orderId, orderQty).then(function (result) {
         response.data.item = {};
         response.status.code = "200";
