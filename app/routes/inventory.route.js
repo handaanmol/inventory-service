@@ -123,7 +123,7 @@ function updateInventoryByOrder(req, res) {
     var orderId = parseInt(req.body.orderId);
     var orderQty = parseInt(req.body.orderQty);
     inventoryService.updateInventoryByOrder(gtin, orderId, orderQty).then(function (result) {
-        response.data.item = {};
+        response.data.item = result;
         response.status.code = "200";
         response.status.message = "Inventory updated successfully by order id.";
         logger.info("Inventory updated successfully by order id.");

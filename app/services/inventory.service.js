@@ -123,14 +123,14 @@ function updateInventoryByOrder(gtin, orderId, orderQty) {
             }
             if (index != null || index != undefined) {
                 console.log("index", index, orderQty);
-                itemFile.itemData[index].quantity = orderQty;
+                itemFile.itemData[index].quantity -= orderQty;
                 fs.writeFile(__dirname + "/../../item.json", JSON.stringify(itemFile), function (err) {
                     if (err) {
                         logger.error("Some error while updating the item file by order Id");
                         reject(err);
                     } else {
                         logger.info("inventory has been updated successfully based on orderId");
-                        resolve("inventory has been updated successfully based on orderId")
+                        resolve(itemFile.itemData[index]);
                     }
                 });
             }
