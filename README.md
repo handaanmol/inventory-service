@@ -70,5 +70,5 @@ node index
 #### You can check the swagger url at
 
 LOCAL
-http://localhost:9001/inventory-services/apis/swagger
+http://localhost:9001/inventory/apis/swagger
 
