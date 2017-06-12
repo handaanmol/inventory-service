@@ -72,6 +72,7 @@ function getInventoryOrdersByGtin(gtin) {
             for (var i = 0; i < itemFile.itemData.length; i++) {
                 if (itemFile.itemData[i].gtin == gtin) {
                     index = i;
+                    break;
                 } else {
                     console.log("no match found");
                 }
@@ -106,19 +107,48 @@ function updateItem(itemId, itemQty) {
     })
 }
 
-function updateInventoryByOrder(itemId, orderId, orderQty) {
+function updateInventoryByOrder(gtin, orderId, orderQty) {
     return new Promise(function (resolve, reject) {
-        itemFile.itemData[itemId - 1].quantity -= orderQty;
-        console.log("updated itemFile is--------", itemFile.itemData);
-        fs.writeFile(__dirname + "/../../item.json", JSON.stringify(itemFile), function (err) {
-            if (err) {
-                logger.error("Some error while updating the item file by order Id");
-                reject(err);
-            } else {
-                logger.info("inventory has been updated successfully based on orderId");
-                resolve("inventory has been updated successfully based on orderId")
+        var index;
+        if (itemFile.itemData != undefined && itemFile.itemData != null) {
+            for (var i = 0; i < itemFile.itemData.length; i++) {
+                console.log("*******************", itemFile.itemData[i].gtin, gtin, itemFile.itemData[i].gtin == gtin);
+                if (itemFile.itemData[i].gtin == gtin) {
+                    index = i;
+                    break;
+                } else {
+                    console.log("no match found");
+                }
+
             }
-        });
+            if (index != null || index != undefined) {
+                console.log("index", index, orderQty);
+                itemFile.itemData[index].quantity = orderQty;
+                fs.writeFile(__dirname + "/../../item.json", JSON.stringify(itemFile), function (err) {
+                    if (err) {
+                        logger.error("Some error while updating the item file by order Id");
+                        reject(err);
+                    } else {
+                        logger.info("inventory has been updated successfully based on orderId");
+                        resolve("inventory has been updated successfully based on orderId")
+                    }
+                });
+            }
+            else {
+                resolve("inventory details for the gtin" + gtin + "was not found");
+            }
+        }
+        // itemFile.itemData[gtin - 1].quantity -= orderQty;
+        // console.log("updated itemFile is--------", itemFile.itemData);
+        // fs.writeFile(__dirname + "/../../item.json", JSON.stringify(itemFile), function (err) {
+        //     if (err) {
+        //         logger.error("Some error while updating the item file by order Id");
+        //         reject(err);
+        //     } else {
+        //         logger.info("inventory has been updated successfully based on orderId");
+        //         resolve("inventory has been updated successfully based on orderId")
+        //     }
+        // });
     })
 }
 
