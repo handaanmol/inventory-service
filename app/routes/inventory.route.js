@@ -16,7 +16,7 @@ function init(router) {
     router.route('/items')
         .post(addItem)
         .get(getItems);
-    router.route('/items/:id/order')
+    router.route('/items/:gtin/order')
         .post(updateInventoryByOrder);
     router.route('/items/:id')
         .put(updateItem)
@@ -119,10 +119,10 @@ function updateItem(req, res) {
 
 function updateInventoryByOrder(req, res) {
     var response = new Response();
-    var itemId = parseInt(req.params.id);
+    var gtin = parseInt(req.params.gtin);
     var orderId = parseInt(req.query.orderId);
     var orderQty = parseInt(req.query.orderQty);
-    inventoryService.updateInventoryByOrder(itemId, orderId, orderQty).then(function (result) {
+    inventoryService.updateInventoryByOrder(gtin, orderId, orderQty).then(function (result) {
         response.data.item = {};
         response.status.code = "200";
         response.status.message = "Inventory updated successfully by order id.";
